@@ -10,3 +10,144 @@
   --color-light-beige: #e4d9cc;
   --color-white-broken: #f4f0ea;
 }
+
+/* ================================
+   HERO - SWIPER
+================================ */
+
+.hero-swiper .swiper-button-prev,
+.hero-swiper .swiper-button-next {
+  z-index: 50 !important;
+
+  width: 40px;
+  height: 40px;
+
+  color: var(--color-white-broken);
+
+  background: rgb(22 22 21 / 30%);
+  padding: 4px;
+  border: 1px solid rgb(244 240 234 / 20%);
+  border-radius: 9999px;
+
+  backdrop-filter: blur(6px);
+
+  transition:
+    background-color 300ms ease,
+    transform 300ms ease;
+}
+
+.hero-swiper .swiper-button-prev::after,
+.hero-swiper .swiper-button-next::after {
+  font-size: 11px !important;
+  font-weight: 600;
+}
+
+/* Hover */
+.hero-swiper .swiper-button-prev:hover,
+.hero-swiper .swiper-button-next:hover {
+  background: rgb(244 240 234 / 15%);
+  border-color: rgb(244 240 234 / 50%);
+}
+
+.hero-swiper .swiper-button-prev:hover {
+  transform: translateX(-2px);
+}
+
+.hero-swiper .swiper-button-next:hover {
+  transform: translateX(2px);
+}
+
+/* Posición horizontal */
+.hero-swiper .swiper-button-prev {
+  left: 28px !important;
+}
+
+.hero-swiper .swiper-button-next {
+  right: 28px !important;
+}
+
+/* ================================
+   PAGINATION
+================================ */
+
+.hero-swiper .swiper-pagination {
+  z-index: 50 !important;
+
+  bottom: 28px !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+}
+
+/* Dots */
+.hero-swiper .swiper-pagination-bullet {
+  width: 7px;
+  height: 7px;
+
+  margin: 0 !important;
+
+  background: var(--color-white-broken) !important;
+
+  opacity: 0.45;
+
+  transition:
+    width 300ms ease,
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+/* Dot activo */
+.hero-swiper .swiper-pagination-bullet-active {
+  width: 24px;
+
+  border-radius: 9999px;
+
+  background: var(--color-white-broken) !important;
+
+  opacity: 1;
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 768px) {
+  .hero-swiper .swiper-button-prev,
+  .hero-swiper .swiper-button-next {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hero-swiper .swiper-button-prev::after,
+  .hero-swiper .swiper-button-next::after {
+    font-size: 7px !important;
+  }
+
+  .hero-swiper .swiper-button-prev {
+    left: 8px !important;
+  }
+
+  .hero-swiper .swiper-button-next {
+    right: 8px !important;
+  }
+
+  /*
+    Dejamos los dots más arriba para que
+    no choquen con el navbar inferior.
+  */
+  .hero-swiper .swiper-pagination {
+    bottom: 90px !important;
+  }
+
+  .hero-swiper .swiper-pagination-bullet {
+    width: 6px;
+    height: 6px;
+  }
+
+  .hero-swiper .swiper-pagination-bullet-active {
+    width: 20px;
+  }
+}

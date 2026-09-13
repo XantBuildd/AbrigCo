@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "../assets/Logo.png";
-import { nav } from "../data/navData";
+import Logo from "@/assets/Logo.png";
+import { nav } from "@/data/navData";
 import { motion } from "motion/react";
 import { useState } from "react";
 

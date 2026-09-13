@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "../assets/Logo.png";
+import Logo from "@/assets/Logo.png";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { FiSearch, FiShoppingCart } from "react-icons/fi";
@@ -37,7 +37,7 @@ function DesktopNavbar() {
         </Link>
 
         {/* Navigation */}
-        <nav className="absolute left-1/2 -translate-x-1/2">
+        <nav className="absolute left-1/2 -translate-x-1/2 text-white-broken">
           <ul className="flex items-center gap-10">
             {desktopNav.map((item, index) => {
               const isSelected = current === index;
@@ -51,15 +51,21 @@ function DesktopNavbar() {
                     onClick={() => setActive(index)}
                     className="
                       relative
+                      z-10
                       block
+                      rounded-2xl
+                      px-5
                       py-2
                       text-sm
                       font-medium
+                      text-white-broken
                     "
                   >
                     <motion.span
                       animate={{
-                        color: isSelected ? "#000000" : "rgba(0, 0, 0, 0.55)",
+                        color: isSelected
+                          ? "#000000"
+                          : "var(--color-white-broken)",
                       }}
                       transition={{
                         duration: 0.2,
@@ -69,24 +75,24 @@ function DesktopNavbar() {
                       {item.title}
                     </motion.span>
 
-                    {/* Active indicator */}
-                    <motion.div
-                      className="
-                        absolute
-                        bottom-0
-                        left-0
-                        h-0.5
-                        rounded-full
-                        bg-black
-                      "
-                      animate={{
-                        width: isSelected ? "100%" : "0%",
-                      }}
-                      transition={{
-                        duration: 0.3,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                    />
+                    {/* Fondo activo */}
+                    {isSelected && (
+                      <motion.div
+                        layoutId="navbar-active"
+                        className="
+                            absolute
+                            inset-0
+                            -z-10
+                            rounded-2xl
+                            bg-white-broken
+                          "
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 35,
+                        }}
+                      />
+                    )}
                   </Link>
                 </li>
               );
@@ -95,7 +101,7 @@ function DesktopNavbar() {
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 text-white-broken">
           <button
             type="button"
             aria-label="Buscar"
