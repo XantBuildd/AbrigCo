@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Serif_Display } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSerifDisplay = DM_Serif_Display({
+  weight: "400",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  style: ["italic", "normal"],
+  variable: "--font-dm-serif",
 });
 
 export const metadata: Metadata = {
@@ -19,11 +17,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${dmSerifDisplay.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col">
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
