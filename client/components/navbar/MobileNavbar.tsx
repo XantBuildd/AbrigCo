@@ -7,6 +7,27 @@ import { nav } from "@/data/navData";
 import { motion } from "motion/react";
 import { useState } from "react";
 
+const navContainer = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const navItem = {
+  hidden: {
+    opacity: 0,
+    y: 10,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
+
 function MobileNavbar() {
   const [active, setActive] = useState(0);
   const [hover, setHover] = useState<number | null>(null);
@@ -16,16 +37,45 @@ function MobileNavbar() {
   return (
     <>
       {/* Mobile Logo */}
-      <header className="fixed left-0 right-0 top-0 z-50">
+      <motion.header
+        initial={{
+          opacity: 0,
+          y: -20,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.8,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        className="fixed left-0 right-0 top-0 z-50"
+      >
         <div className="flex h-16 items-center justify-center">
           <Link href="/">
             <Image src={Logo} alt="AbrigCo" width={50} height={50} priority />
           </Link>
         </div>
-      </header>
+      </motion.header>
 
       {/* Mobile Bottom Navbar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50">
+      <motion.div
+        initial={{
+          y: 80,
+          opacity: 0,
+        }}
+        animate={{
+          y: 0,
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.8,
+          delay: 0.15,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        className="fixed bottom-0 left-0 right-0 z-50"
+      >
         <div
           className="
             relative
@@ -35,6 +85,7 @@ function MobileNavbar() {
             bg-dark-grey
           "
         >
+          {/* Active indicator */}
           <motion.div
             className="
               pointer-events-none
@@ -64,7 +115,10 @@ function MobileNavbar() {
             }}
           />
 
-          <ul
+          <motion.ul
+            variants={navContainer}
+            initial="hidden"
+            animate="visible"
             className="
               relative
               z-10
@@ -81,66 +135,75 @@ function MobileNavbar() {
               const isSelected = current === index;
 
               return (
-                <Link
+                <motion.li
                   key={item.url}
-                  href={item.url}
-                  onMouseEnter={() => setHover(index)}
-                  onMouseLeave={() => setHover(null)}
-                  onClick={() => setActive(index)}
-                  className="
-                    flex
-                    h-full
-                    w-full
-                    items-center
-                    justify-center
-                  "
+                  variants={navItem}
+                  transition={{
+                    duration: 0.5,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="h-full w-full"
                 >
-                  <motion.div
-                    animate={{
-                      scale: isSelected ? 1.08 : 1,
-
-                      rotate: isSelected ? [0, -8, 3, 0] : 0,
-
-                      color: isSelected ? "#000000" : "var(--white-broken)",
-                    }}
-                    transition={{
-                      scale: {
-                        type: "spring",
-                        stiffness: 450,
-                        damping: 25,
-                        mass: 0.7,
-                      },
-
-                      rotate: {
-                        duration: 0.45,
-                        ease: [0.34, 1.56, 0.64, 1],
-                      },
-
-                      color: {
-                        duration: 0.2,
-                        ease: "easeOut",
-                      },
-                    }}
+                  <Link
+                    href={item.url}
+                    onMouseEnter={() => setHover(index)}
+                    onMouseLeave={() => setHover(null)}
+                    onClick={() => setActive(index)}
                     className="
                       flex
-                      flex-col
+                      h-full
+                      w-full
                       items-center
                       justify-center
                     "
                   >
-                    <Icon
-                      className="text-2xl"
-                      strokeWidth={isSelected ? 2 : 1.3}
-                    />
+                    <motion.div
+                      animate={{
+                        scale: isSelected ? 1.08 : 1,
 
-                    <span className="text-[12px]">{item.title}</span>
-                  </motion.div>
-                </Link>
+                        rotate: isSelected ? [0, -8, 3, 0] : 0,
+
+                        color: isSelected ? "#000000" : "var(--white-broken)",
+                      }}
+                      transition={{
+                        scale: {
+                          type: "spring",
+                          stiffness: 450,
+                          damping: 25,
+                          mass: 0.7,
+                        },
+
+                        rotate: {
+                          duration: 0.45,
+                          ease: [0.34, 1.56, 0.64, 1],
+                        },
+
+                        color: {
+                          duration: 0.2,
+                          ease: "easeOut",
+                        },
+                      }}
+                      className="
+                        flex
+                        flex-col
+                        items-center
+                        justify-center
+                      "
+                    >
+                      <Icon
+                        className="text-2xl"
+                        strokeWidth={isSelected ? 2 : 1.3}
+                      />
+
+                      <span className="text-[12px]">{item.title}</span>
+                    </motion.div>
+                  </Link>
+                </motion.li>
               );
             })}
-          </ul>
+          </motion.ul>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display } from "next/font/google";
+import Preloader from "@/components/Preloader";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 
@@ -19,8 +20,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${dmSerifDisplay.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        {children}
+        <Preloader>
+          <Navbar />
+          {children}
+        </Preloader>
       </body>
     </html>
   );

@@ -22,6 +22,27 @@ const desktopNav = [
   },
 ];
 
+const navContainer = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.25,
+    },
+  },
+};
+
+const navItem = {
+  hidden: {
+    opacity: 0,
+    y: -12,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
+
 function DesktopNavbar() {
   const [active, setActive] = useState(0);
   const [hover, setHover] = useState<number | null>(null);
@@ -29,21 +50,53 @@ function DesktopNavbar() {
   const current = hover ?? active;
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-50">
+    <motion.header
+      initial="hidden"
+      animate="visible"
+      className="fixed left-0 right-0 top-0 z-50"
+    >
       <div className="mx-auto flex h-20 w-full items-center justify-between px-8">
         {/* Logo */}
-        <Link href="/" className="shrink-0">
-          <Image src={Logo} alt="AbrigCo" width={60} height={60} priority />
-        </Link>
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: -18,
+            scale: 0.92,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          }}
+          transition={{
+            duration: 0.8,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <Link href="/" className="block shrink-0">
+            <Image src={Logo} alt="AbrigCo" width={60} height={60} priority />
+          </Link>
+        </motion.div>
 
         {/* Navigation */}
-        <nav className="absolute left-1/2 -translate-x-1/2 text-white-broken">
+        <motion.nav
+          variants={navContainer}
+          className="absolute left-1/2 -translate-x-1/2 text-white-broken"
+        >
           <ul className="flex items-center gap-10">
             {desktopNav.map((item, index) => {
               const isSelected = current === index;
 
               return (
-                <li key={item.url} className="relative">
+                <motion.li
+                  key={item.url}
+                  variants={navItem}
+                  transition={{
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="relative"
+                >
                   <Link
                     href={item.url}
                     onMouseEnter={() => setHover(index)}
@@ -75,17 +128,16 @@ function DesktopNavbar() {
                       {item.title}
                     </motion.span>
 
-                    {/* Fondo activo */}
                     {isSelected && (
                       <motion.div
                         layoutId="navbar-active"
                         className="
-                            absolute
-                            inset-0
-                            -z-10
-                            rounded-2xl
-                            bg-white-broken
-                          "
+                          absolute
+                          inset-0
+                          -z-10
+                          rounded-2xl
+                          bg-white-broken
+                        "
                         transition={{
                           type: "spring",
                           stiffness: 500,
@@ -94,14 +146,29 @@ function DesktopNavbar() {
                       />
                     )}
                   </Link>
-                </li>
+                </motion.li>
               );
             })}
           </ul>
-        </nav>
+        </motion.nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-5 text-white-broken">
+        <motion.div
+          initial={{
+            opacity: 0,
+            x: 18,
+          }}
+          animate={{
+            opacity: 1,
+            x: 0,
+          }}
+          transition={{
+            duration: 0.7,
+            delay: 0.35,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="flex items-center gap-5 text-white-broken"
+        >
           <button
             type="button"
             aria-label="Buscar"
@@ -137,9 +204,9 @@ function DesktopNavbar() {
           >
             <FiShoppingCart className="text-xl" strokeWidth={1.5} />
           </Link>
-        </div>
+        </motion.div>
       </div>
-    </header>
+    </motion.header>
   );
 }
 
